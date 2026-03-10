@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import {
   Heart, Moon, Music, Brain, MessageCircle, Sparkles,
-  Play, Pause, Volume2, Send, ChevronRight, BookOpen
+  Play, Pause, Send, ChevronRight, BookOpen
 } from 'lucide-react';
 
 const HealingPage = () => {

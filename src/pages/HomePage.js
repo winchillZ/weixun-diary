@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Wine, Calendar, TrendingUp, Heart, Plus, ChevronRight, Moon, Sun } from 'lucide-react';
+import { Wine, TrendingUp, Heart, Plus, ChevronRight, Moon, Sun } from 'lucide-react';
 
 const HomePage = ({ drinkRecords, onNavigate }) => {
   const today = new Date();

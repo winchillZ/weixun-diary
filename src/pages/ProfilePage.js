@@ -1,8 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import {
-  User, Settings, Award, TrendingUp, Calendar, ChevronRight,
-  Wine, Heart, Target, Bell, Shield, HelpCircle, LogOut
+  Award, TrendingUp, Calendar, ChevronRight,
+  Heart, Target, Bell, Shield, HelpCircle
 } from 'lucide-react';
 
 const ProfilePage = ({ drinkRecords }) => {

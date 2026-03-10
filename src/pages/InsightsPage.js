@@ -1,13 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
-  LineChart, Line, PieChart, Pie, Cell
+  PieChart, Pie, Cell
 } from 'recharts';
-import { Calendar, TrendingUp, Award, Target, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Calendar, TrendingUp, Award, Target } from 'lucide-react';
 
 const InsightsPage = ({ drinkRecords }) => {
-  const [selectedMonth, setSelectedMonth] = useState(new Date());
 
   // 模拟数据
   const weeklyData = [
@@ -18,13 +17,6 @@ const InsightsPage = ({ drinkRecords }) => {
     { day: '周五', drinks: 4, mood: 8 },
     { day: '周六', drinks: 2, mood: 9 },
     { day: '周日', drinks: 1, mood: 7 },
-  ];
-
-  const monthlyData = [
-    { week: '第1周', drinks: 8 },
-    { week: '第2周', drinks: 6 },
-    { week: '第3周', drinks: 10 },
-    { week: '第4周', drinks: 7 },
   ];
 
   const moodData = [
