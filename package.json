@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "微醺日记 - 面向00后的饮酒记录+轻社交+轻心理疗愈App",
   "private": true,
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "dependencies": {
     "autoprefixer": "^10.4.27",
     "framer-motion": "^11.0.0",
