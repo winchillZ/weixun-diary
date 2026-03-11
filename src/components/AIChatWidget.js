@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send, Bot, User, Sparkles, Heart, Coffee, Moon, Sun } from 'lucide-react';
+import { Send, Bot, User, Sparkles } from 'lucide-react';
 
 const AIChatWidget = ({ onClose }) => {
   const [messages, setMessages] = useState([
