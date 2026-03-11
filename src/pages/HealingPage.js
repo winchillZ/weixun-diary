@@ -2,18 +2,20 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import {
   Heart, Moon, Music, Brain, MessageCircle, Sparkles,
-  Play, Pause, Send, ChevronRight, BookOpen
+  Play, Pause, Send, ChevronRight, BookOpen, Bot
 } from 'lucide-react';
+import AIChatWidget from '../components/AIChatWidget';
 
 const HealingPage = () => {
-  const [activeTab, setActiveTab] = useState('mood');
+  const [activeTab, setActiveTab] = useState('ai');
   const [selectedMood, setSelectedMood] = useState(null);
   const [message, setMessage] = useState('');
   const [playingTrack, setPlayingTrack] = useState(null);
+  const [showFullChat, setShowFullChat] = useState(false);
 
   const tabs = [
+    { id: 'ai', label: 'AI陪伴', icon: Bot },
     { id: 'mood', label: '情绪记录', icon: Heart },
-    { id: 'ai', label: 'AI陪伴', icon: MessageCircle },
     { id: 'meditation', label: '冥想音频', icon: Music },
     { id: 'resources', label: '专业资源', icon: BookOpen },
   ];
@@ -115,15 +117,14 @@ const HealingPage = () => {
     },
   ];
 
-  const chatMessages = [
-    { role: 'ai', content: '你好，我是你的AI陪伴助手。今天感觉怎么样？有什么想聊聊的吗？' },
-    { role: 'user', content: '最近工作压力有点大，喝了点酒' },
-    { role: 'ai', content: '我理解你的感受。工作压力大的时候，喝点酒放松是很正常的。能跟我说说是什么让你感到压力吗？' },
-  ];
-
   const handlePlayTrack = (trackId) => {
     setPlayingTrack(playingTrack === trackId ? null : trackId);
   };
+
+  // 如果显示完整聊天，则渲染全屏聊天组件
+  if (showFullChat) {
+    return <AIChatWidget onClose={() => setShowFullChat(false)} />;
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-purple-50 pb-8">
@@ -151,7 +152,7 @@ const HealingPage = () => {
               onClick={() => setActiveTab(tab.id)}
               className={`flex items-center space-x-2 px-4 py-2 rounded-full font-medium whitespace-nowrap transition-all ${
                 activeTab === tab.id
-                  ? 'bg-gradient-to-r from-orange-400 to-purple-500 text-white'
+                  ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg'
                   : 'bg-white text-gray-600 shadow-sm'
               }`}
               whileTap={{ scale: 0.95 }}
@@ -162,6 +163,79 @@ const HealingPage = () => {
           ))}
         </div>
       </div>
+
+      {/* AI 陪伴 */}
+      {activeTab === 'ai' && (
+        <motion.div
+          className="px-6"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+        >
+          {/* AI 聊天入口卡片 */}
+          <motion.div
+            className="card bg-gradient-to-br from-purple-500 via-pink-500 to-orange-500 text-white mb-6 shadow-xl"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={() => setShowFullChat(true)}
+          >
+            <div className="flex items-center space-x-4">
+              <motion.div
+                animate={{ rotate: [0, 10, -10, 0] }}
+                transition={{ duration: 2, repeat: Infinity }}
+                className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center"
+              >
+                <Bot className="w-10 h-10" />
+              </motion.div>
+              <div className="flex-1">
+                <h3 className="text-xl font-bold mb-1">和 AI 聊聊</h3>
+                <p className="text-sm text-white/90">随时倾听，温暖陪伴</p>
+              </div>
+              <Send className="w-6 h-6 text-white/60" />
+            </div>
+          </motion.div>
+
+          {/* AI 功能介绍 */}
+          <div className="card mb-4">
+            <h3 className="font-semibold text-gray-800 mb-3">AI 陪伴能做什么？</h3>
+            <div className="space-y-3">
+              <div className="flex items-start space-x-3">
+                <div className="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <Heart className="w-4 h-4 text-purple-500" />
+                </div>
+                <div>
+                  <p className="font-medium text-gray-800">倾听你的心事</p>
+                  <p className="text-sm text-gray-500">无论开心还是烦恼，我都愿意听</p>
+                </div>
+              </div>
+              <div className="flex items-start space-x-3">
+                <div className="w-8 h-8 bg-pink-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <Sparkles className="w-4 h-4 text-pink-500" />
+                </div>
+                <div>
+                  <p className="font-medium text-gray-800">提供情绪支持</p>
+                  <p className="text-sm text-gray-500">给你温暖的力量和建议</p>
+                </div>
+              </div>
+              <div className="flex items-start space-x-3">
+                <div className="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                  <Brain className="w-4 h-4 text-orange-500" />
+                </div>
+                <div>
+                  <p className="font-medium text-gray-800">分析饮酒模式</p>
+                  <p className="text-sm text-gray-500">帮你理解自己的饮酒习惯</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="card-glass bg-gradient-to-r from-purple-50 to-pink-50 border-2 border-purple-200">
+            <p className="text-gray-600 text-center text-sm">
+              💜 这是一个安全的空间，你的感受值得被倾听。如遇危机情况，请寻求专业帮助。
+            </p>
+          </div>
+        </motion.div>
+      )}
 
       {/* 情绪记录 */}
       {activeTab === 'mood' && (
@@ -207,66 +281,6 @@ const HealingPage = () => {
               <button className="w-full btn-primary">保存情绪记录</button>
             </motion.div>
           )}
-        </motion.div>
-      )}
-
-      {/* AI陪伴 */}
-      {activeTab === 'ai' && (
-        <motion.div
-          className="px-6"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
-        >
-          <div className="card mb-4">
-            <div className="flex items-center space-x-3 mb-4">
-              <div className="w-12 h-12 bg-gradient-to-br from-purple-400 to-pink-500 rounded-full flex items-center justify-center">
-                <Sparkles className="w-6 h-6 text-white" />
-              </div>
-              <div>
-                <p className="font-semibold text-gray-800">AI陪伴助手</p>
-                <p className="text-sm text-gray-500">24小时在线，随时倾听</p>
-              </div>
-            </div>
-
-            <div className="space-y-3 max-h-96 overflow-y-auto mb-4">
-              {chatMessages.map((msg, index) => (
-                <div
-                  key={index}
-                  className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
-                >
-                  <div
-                    className={`max-w-[80%] p-3 rounded-2xl ${
-                      msg.role === 'user'
-                        ? 'bg-gradient-to-r from-orange-400 to-purple-500 text-white'
-                        : 'bg-gray-100 text-gray-800'
-                    }`}
-                  >
-                    {msg.content}
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div className="flex space-x-2">
-              <input
-                type="text"
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                placeholder="说点什么..."
-                className="flex-1 input-field"
-              />
-              <button className="w-12 h-12 bg-gradient-to-r from-orange-400 to-purple-500 rounded-full flex items-center justify-center">
-                <Send className="w-5 h-5 text-white" />
-              </button>
-            </div>
-          </div>
-
-          <div className="card-glass bg-gradient-to-r from-purple-50 to-pink-50">
-            <p className="text-gray-600 text-center text-sm">
-              💜 这是一个安全的空间，你的感受值得被倾听。如遇危机情况，请寻求专业帮助。
-            </p>
-          </div>
         </motion.div>
       )}
 
@@ -346,7 +360,7 @@ const HealingPage = () => {
             ))}
           </div>
 
-          <div className="card-glass bg-gradient-to-r from-orange-50 to-pink-50 mt-6">
+          <div className="card-glass bg-gradient-to-r from-orange-50 to-pink-50 mt-6 border-2 border-orange-200">
             <p className="text-gray-600 text-center text-sm">
               💡 如果你在饮酒或情绪方面遇到严重困扰，建议寻求专业心理咨询师的帮助。
             </p>
